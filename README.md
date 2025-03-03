@@ -98,7 +98,3 @@ Exodus a été développé en **trinôme**, avec une répartition des tâches se
 - Un terminal ou IDE (IntelliJ, Eclipse, VS Code)  
 - Git  
 
-### 📥 Cloner le projet  
-```bash
-git clone https://github.com/ton-utilisateur/exodus.git
-cd exodus
