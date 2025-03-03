@@ -1,0 +1,597 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+interface AbstractFactory << interface >> {
+  + createAnimalPredateur2(Position, int, Personnage): AnimalPredateur
+  + getTileDecoration(TileState): String
+  + createAnimal(Position, Personnage, int): Animal
+  + createAnimalPredateur1(Position, int, Personnage): AnimalPredateur
+  + createNourriturePrincipale(): TileState
+  + createNourritureSecondaire(): TileState
+  + createCachette1(): TileState
+  + createCachette2(): TileState
+  + createNourriturePourrie(): TileState
+  + dechiffrerEtAppeller(char): TileState
+   predateurChar1: char
+   predateurChar2: char
+   animalChar: char
+   carteChemin: String
+}
+class Animal {
+  + Animal(Position, Personnage, int, int): 
+  - monMaitre: Personnage
+  - symbole: String
+  # position: Position
+  # nbToursPourEtatBizzare: int
+  # rassasie: EtatAnimal
+  # nbToursPourPoserAnimal: int
+  # amiDuPersonnage: EtatAnimal
+  - id: int
+  # etatCourant: EtatAnimal
+  # nbTours: int
+  - deplacementStrategy: DeplacementStrategy
+  # perched: EtatAnimal
+  - mes_ennemis: List<AnimalPredateur>
+  # affame: EtatAnimal
+  # cache: EtatAnimal
+  # compteur_perte_de_danger: int
+  # junkie: EtatAnimal
+  + setEstDansPoche(): void
+  + chargerTours(): void
+  + toggleEsttue(): void
+  + clearEnnemis(): void
+  + ilyaanimalDansCettePosition(Position): boolean
+  + estTue(): boolean
+  + trouverCaseAdaptee(Carte, Class<?>): Position
+  + seCacheOu2(): String
+  + trouverCaseVideProche(Carte): Position
+  + estDansPoche(): boolean
+  + seCacheOu1(): String
+  + estVoisinDuPersonnage(): boolean
+  + seDeplacer(Carte): void
+  + reset_compteur_perte_de_danger(): void
+  + decerement_compteur_perte_de_danger(): void
+  + fuirDanger(Carte, Position): Position
+  + decrementeNbToursPourEtatBizzare(): void
+  + ressetNbToursPourEtatBizzare(): void
+  + decrementeTours(): void
+  ~ setNbToursPourPoserAnimal(): void
+  + scoopDanger(Carte, int): List<Position>
+  ~ decrementeNbToursPourPoserAnimal(): void
+  + resetEstDansPoche(): void
+   junkie: EtatAnimal
+   compteur_perte_de_danger: int
+   id: int
+   nbTours: int
+   symbole: String
+   etatCourant: EtatAnimal
+   mes_ennemis: List<AnimalPredateur>
+   initialTours: int
+   position: Position
+   deplacementStrategy: DeplacementStrategy
+   cache: EtatAnimal
+   monMaitre: Personnage
+   amiDuPersonnage: EtatAnimal
+   tileCachettePrincipale: TileState
+   tileCachetteSecondaire: TileState
+   affame: EtatAnimal
+   nbToursPourEtatBizzare: int
+   couleur: String
+   rassasie: EtatAnimal
+   perched: EtatAnimal
+   nbToursPourPoserAnimal: int
+}
+class AnimalPredateur {
+  + AnimalPredateur(Position, int, Personnage): 
+  # monEnnemi: Personnage
+  - id: int
+  # position: Position
+  # afterKillPosition: Position
+  # etatPredateurEnCours: EtatPredateur
+  # mes_proies: List<Animal>
+  # togglePossibilteDeLeTuer(): void
+  + letuer(): void
+  + toogleAfterKillPosition(): void
+  + proieEstProtegeParCachette(Position, Carte): boolean
+  # positionEgaleAuMaitre(Position): boolean
+  + proieScoop(Carte, int, Class<Animal>): List<Animal>
+  + mettreAJour(Animal): void
+  # peutEtreTue(): boolean
+  + estMort(): boolean
+  + attaquer(Animal, Carte): boolean
+  + notifierObservateurs(Animal): void
+  + ajouterObservateur(Observateur): void
+  # ilYaUnAnimalDansCettePosition(Position): boolean
+  + retirerObservateur(Observateur): void
+  + peutAttaquer(Animal): boolean
+  + seDeplacer(Carte): void
+  + estImmobiliser(): boolean
+   etatPredateurEnCours: EtatPredateur
+   id: int
+   symbole: String
+   couleur: String
+   monEnnemi: Personnage
+   mes_proies: List<Animal>
+   position: Position
+   afterKillPosition: Position
+}
+class ArbreTile {
+  + ArbreTile(): 
+   description: String
+   dangerous: boolean
+   movable: boolean
+}
+class Banane {
+  + Banane(): 
+   description: String
+   dangerous: boolean
+   movable: boolean
+}
+class BuissonTile {
+  + BuissonTile(): 
+   description: String
+   dangerous: boolean
+   movable: boolean
+}
+class CachettePrincipale {
+  + CachettePrincipale(): 
+   movable: boolean
+}
+class CachetteSecondaire {
+  + CachetteSecondaire(): 
+   movable: boolean
+}
+class Carte {
+  + Carte(): 
+  - largeur: int
+  - hauteur: int
+  + chargerCarteDepuisFichier(String): void
+  + setCase(int, int, Case): void
+  + setDimensions(int, int): void
+  + getCase(int, int): Case
+   hauteur: int
+   largeur: int
+   personnagePosition: Position
+   animalsPredateur1: List<Position>
+   animals: List<Position>
+   abstractFactory: AbstractFactory
+   animalsPredateur2: List<Position>
+}
+class Case {
+  + Case(TileState): 
+  - etat: TileState
+  - isJeteParjouer: boolean
+  + estVide(): boolean
+  + setJeteparJouer(): void
+   isJeteParjouer: boolean
+   etat: TileState
+}
+class Champignon {
+  + Champignon(): 
+   description: String
+   dangerous: boolean
+   movable: boolean
+}
+class ChampignonHallucinogeneTile {
+  + ChampignonHallucinogeneTile(TileState): 
+   description: String
+   dangerous: boolean
+   movable: boolean
+}
+class ChampignonVeneuxTile {
+  + ChampignonVeneuxTile(TileState): 
+   description: String
+   dangerous: boolean
+   movable: boolean
+}
+class CocotierTile {
+  + CocotierTile(): 
+   description: String
+   dangerous: boolean
+   movable: boolean
+}
+interface Command << interface >> {
+  + execute(): void
+}
+class CommandManager {
+  + CommandManager(): 
+  + executeCommand(Command): void
+  + undoLastCommand(): void
+}
+class DeplacementAleatoire {
+  + DeplacementAleatoire(): 
+  + calculerDeplacement(Animal, Carte): Position
+}
+class DeplacementJunkie {
+  + DeplacementJunkie(): 
+  + calculerDeplacement(Animal, Carte): Position
+}
+interface DeplacementStrategy << interface >> {
+  + calculerDeplacement(Animal, Carte): Position
+}
+class DeplacementVersJoueur {
+  + DeplacementVersJoueur(): 
+  + calculerDeplacement(Animal, Carte): Position
+}
+class DeplacementVersNourriture {
+  + DeplacementVersNourriture(): 
+  + calculerDeplacement(Animal, Carte): Position
+}
+enum Direction << enumeration >> {
+  + Direction(): 
+  + values(): Direction[]
+  + valueOf(String): Direction
+}
+class Ecureuil {
+  + Ecureuil(Position, Personnage, int): 
+  + decerement_compteur_perte_de_danger(): void
+  + setEstDansPoche(): void
+  + decrementeNbToursPourEtatBizzare(): void
+  + resetEstDansPoche(): void
+  + estDansPoche(): boolean
+  + seCacheOu2(): String
+  + ressetNbToursPourEtatBizzare(): void
+  + seCacheOu1(): String
+  + reset_compteur_perte_de_danger(): void
+  ~ setNbToursPourPoserAnimal(): void
+  ~ decrementeNbToursPourPoserAnimal(): void
+   tileCachettePrincipale: TileState
+   tileCachetteSecondaire: TileState
+   compteur_perte_de_danger: int
+   nbToursPourEtatBizzare: int
+   symbole: String
+   couleur: String
+   initialTours: int
+   nbToursPourPoserAnimal: int
+}
+class EmptyTile {
+  + EmptyTile(): 
+   description: String
+   dangerous: boolean
+   movable: boolean
+}
+interface EtatAnimal << interface >> {
+  + seDeplacer(Carte): void
+}
+class EtatAnimalAffame {
+  + EtatAnimalAffame(Animal): 
+  - mangerNourriture(Carte, Position): void
+  + seDeplacer(Carte): void
+}
+class EtatAnimalAmiDuPersonnage {
+  + EtatAnimalAmiDuPersonnage(Animal): 
+  + seDeplacer(Carte): void
+}
+class EtatAnimalCache {
+  + EtatAnimalCache(Animal): 
+  + seDeplacer(Carte): void
+}
+class EtatAnimalDansPoche {
+  + EtatAnimalDansPoche(Personnage, Animal): 
+  + seDeplacer(Carte): void
+}
+class EtatAnimalJunkie {
+  + EtatAnimalJunkie(Animal): 
+  + seDeplacer(Carte): void
+}
+class EtatAnimalPerche {
+  + EtatAnimalPerche(Animal): 
+  + seDeplacer(Carte): void
+}
+class EtatAnimalRassasie {
+  + EtatAnimalRassasie(Animal): 
+  + seDeplacer(Carte): void
+}
+class EtatHibouParTerre {
+  + EtatHibouParTerre(Hibou): 
+  + seDeplacer(Carte): void
+  + attaquer(Animal, Carte): void
+   couleur: String
+}
+class EtatHibouPeutAttaquer {
+  + EtatHibouPeutAttaquer(Hibou): 
+  + attaquer(Animal, Carte): void
+  + seDeplacer(Carte): void
+   couleur: String
+}
+class EtatPerteDeDanger {
+  + EtatPerteDeDanger(Animal): 
+  + seDeplacer(Carte): void
+}
+interface EtatPredateur << interface >> {
+  + attaquer(Animal, Carte): void
+  + seDeplacer(Carte): void
+   couleur: String
+}
+class EtatScorpionNePeutPasPiquer {
+  + EtatScorpionNePeutPasPiquer(AnimalPredateur): 
+  + attaquer(Animal, Carte): void
+  + seDeplacer(Carte): void
+   couleur: String
+}
+class EtatScorpionPeutPiquer {
+  + EtatScorpionPeutPiquer(AnimalPredateur): 
+  + attaquer(Animal, Carte): void
+  + seDeplacer(Carte): void
+   couleur: String
+}
+class EtatSerpentEntrainDeDigerer {
+  + EtatSerpentEntrainDeDigerer(AnimalPredateur): 
+  + attaquer(Animal, Carte): void
+  + seDeplacer(Carte): void
+   couleur: String
+}
+class EtatSerpentPeutAttaquer {
+  + EtatSerpentPeutAttaquer(AnimalPredateur): 
+  + seDeplacer(Carte): void
+  + attaquer(Animal, Carte): void
+   couleur: String
+}
+class FightCommand {
+  + FightCommand(Personnage, Carte, Ihm, List<Animal>, List<AnimalPredateur>): 
+  + execute(): void
+}
+class ForestFactory {
+  + ForestFactory(): 
+  + createNourriturePrincipale(): TileState
+  + createCachette2(): TileState
+  + createNourriturePourrie(): TileState
+  + dechiffrerEtAppeller(char): TileState
+  + getTileDecoration(TileState): String
+  + createAnimalPredateur2(Position, int, Personnage): AnimalPredateur
+  + createNourritureSecondaire(): TileState
+  + createCachette1(): TileState
+  + createAnimal(Position, Personnage, int): Animal
+  + createAnimalPredateur1(Position, int, Personnage): AnimalPredateur
+   predateurChar1: char
+   predateurChar2: char
+   animalChar: char
+   carteChemin: String
+}
+class Gland {
+  + Gland(): 
+   description: String
+   dangerous: boolean
+   movable: boolean
+}
+class Hibou {
+  + Hibou(Position, int, Personnage): 
+  + verifierBuissonAutourDeLecureuil(Position, Carte): boolean
+  # peutEtreTue(): boolean
+  + attaquer(Animal, Carte): boolean
+  # togglePossibilteDeLeTuer(): void
+  + seDeplacer(Carte): void
+  + proieEstProtegeParCachette(Position, Carte): boolean
+   symbole: String
+   couleur: String
+   etat: EtatPredateur
+}
+class InteractCommand {
+  + InteractCommand(Carte, Personnage, Ihm): 
+  + execute(): void
+}
+class InventoryCommand {
+  + InventoryCommand(Personnage): 
+  + execute(): void
+}
+class JungleFactory {
+  + JungleFactory(): 
+  + createCachette2(): TileState
+  + createNourritureSecondaire(): TileState
+  + createCachette1(): TileState
+  + createNourriturePrincipale(): TileState
+  + dechiffrerEtAppeller(char): TileState
+  + getTileDecoration(TileState): String
+  + createAnimalPredateur2(Position, int, Personnage): AnimalPredateur
+  + createAnimal(Position, Personnage, int): Animal
+  + createAnimalPredateur1(Position, int, Personnage): AnimalPredateur
+  + createNourriturePourrie(): TileState
+   predateurChar1: char
+   predateurChar2: char
+   animalChar: char
+   carteChemin: String
+}
+class MoveCommand {
+  + MoveCommand(Personnage, Direction, Carte): 
+  + execute(): void
+}
+class NourritureDangeureuse {
+  + NourritureDangeureuse(): 
+   description: String
+   dangerous: boolean
+   movable: boolean
+}
+class NourriturePrincipale {
+  + NourriturePrincipale(): 
+   movable: boolean
+}
+class NourritureSecondaire {
+  + NourritureSecondaire(): 
+   movable: boolean
+}
+class Objet {
+  + Objet(TileState): 
+  - type: TileState
+  + toString(): String
+   type1: TileState
+   type: String
+}
+interface Observateur << interface >> {
+  + mettreAJour(Animal): void
+}
+class Personnage {
+  + Personnage(Position, List<Animal>, Carte): 
+  - les_ennemis_de_mon_ami: List<AnimalPredateur>
+  - position: Position
+  - animaux: List<Animal>
+  - inventaire: List<Objet>
+  - epaule: Animal[]
+  + afficherInventaire(): void
+  + retirerObjet(): Objet
+  + ajouterAnimalPoche(Animal): void
+  + rendreObjet(Objet): void
+  + positionOccupeeParEnnemi(Position): boolean
+  + ajouterObjet(Objet): void
+  + retirerAnimalPoche(Animal): void
+  + seDeplacer(Direction, Carte): void
+  + meilleurPositionpouranimal(Position): Position
+   inventaire: List<Objet>
+   animauxDanger: List<AnimalPredateur>
+   animaux: List<Animal>
+   couleur: String
+   epaule: Animal
+   les_ennemis_de_mon_ami: List<AnimalPredateur>
+   abstractFactory: AbstractFactory
+   position: Position
+}
+class PetitRocherTile {
+  + PetitRocherTile(): 
+   description: String
+   dangerous: boolean
+   movable: boolean
+}
+class Position {
+  + Position(int, int): 
+  - y: int
+  - x: int
+  + toString(): String
+  + estAdjacente(Position): boolean
+  + positionTowards(Direction, int): Position
+  + hashCode(): int
+  + equals(Object): boolean
+   y: int
+   x: int
+}
+class Renard {
+  + Renard(Position, int, Personnage): 
+  + seDeplacer(Carte): void
+  # togglePossibilteDeLeTuer(): void
+  + proieEstProtegeParCachette(Position, Carte): boolean
+  # peutEtreTue(): boolean
+  + attaquer(Animal, Carte): boolean
+   symbole: String
+   couleur: String
+}
+class Scorpion {
+  + Scorpion(Position, int, Personnage): 
+  # peutEtreTue(): boolean
+  + seDeplacer(Carte): void
+  + attaquer(Animal, Carte): boolean
+  + proieEstProtegeParCachette(Position, Carte): boolean
+  + estImmobiliser(): boolean
+  # togglePossibilteDeLeTuer(): void
+   symbole: String
+   couleur: String
+}
+class Serpent {
+  + Serpent(Position, int, Personnage): 
+  + attaquer(Animal, Carte): boolean
+  + proieEstProtegeParCachette(Position, Carte): boolean
+  # togglePossibilteDeLeTuer(): void
+  # peutEtreTue(): boolean
+  + seDeplacer(Carte): void
+   symbole: String
+   couleur: String
+}
+class Singe {
+  + Singe(Position, Personnage, int): 
+  - nourrituresProches: int
+  + ressetNbToursPourEtatBizzare(): void
+  + decrementeNbToursPourEtatBizzare(): void
+  + estDansPoche(): boolean
+  + decerement_compteur_perte_de_danger(): void
+  + setEstDansPoche(): void
+  ~ decrementeNbToursPourPoserAnimal(): void
+  + seCacheOu2(): String
+  + reset_compteur_perte_de_danger(): void
+  + incrementerNourrituresProches(): void
+  + seCacheOu1(): String
+  ~ setNbToursPourPoserAnimal(): void
+  + resetEstDansPoche(): void
+   tileCachettePrincipale: TileState
+   tileCachetteSecondaire: TileState
+   compteur_perte_de_danger: int
+   nbToursPourEtatBizzare: int
+   symbole: String
+   couleur: String
+   nourrituresProches: int
+   initialTours: int
+   nbToursPourPoserAnimal: int
+}
+interface Sujet << interface >> {
+  + ajouterObservateur(Observateur): void
+  + notifierObservateurs(Animal): void
+  + retirerObservateur(Observateur): void
+}
+class TerminalColors {
+  + TerminalColors(): 
+}
+class ThrowCommand {
+  + ThrowCommand(Personnage, Direction, Carte): 
+  + execute(): void
+}
+interface TileState << interface >> {
+   description: String
+   dangerous: boolean
+   movable: boolean
+}
+class WallTile {
+  + WallTile(): 
+   description: String
+   dangerous: boolean
+   movable: boolean
+}
+
+AnimalPredateur              -[#008200,dashed]-^  Observateur                 
+AnimalPredateur              -[#008200,dashed]-^  Sujet                       
+ArbreTile                    -[#000082,plain]-^  CachettePrincipale          
+Banane                       -[#000082,plain]-^  NourriturePrincipale        
+BuissonTile                  -[#000082,plain]-^  CachetteSecondaire          
+CachettePrincipale           -[#008200,dashed]-^  TileState                   
+CachetteSecondaire           -[#008200,dashed]-^  TileState                   
+Champignon                   -[#000082,plain]-^  NourritureSecondaire        
+ChampignonHallucinogeneTile  -[#000082,plain]-^  NourritureDangeureuse       
+ChampignonVeneuxTile         -[#000082,plain]-^  NourritureDangeureuse       
+CocotierTile                 -[#000082,plain]-^  CachettePrincipale          
+DeplacementAleatoire         -[#008200,dashed]-^  DeplacementStrategy         
+DeplacementJunkie            -[#008200,dashed]-^  DeplacementStrategy         
+DeplacementVersJoueur        -[#008200,dashed]-^  DeplacementStrategy         
+DeplacementVersNourriture    -[#008200,dashed]-^  DeplacementStrategy         
+Ecureuil                     -[#000082,plain]-^  Animal                      
+EmptyTile                    -[#008200,dashed]-^  TileState                   
+EtatAnimalAffame             -[#008200,dashed]-^  EtatAnimal                  
+EtatAnimalAmiDuPersonnage    -[#008200,dashed]-^  EtatAnimal                  
+EtatAnimalCache              -[#008200,dashed]-^  EtatAnimal                  
+EtatAnimalDansPoche          -[#008200,dashed]-^  EtatAnimal                  
+EtatAnimalJunkie             -[#008200,dashed]-^  EtatAnimal                  
+EtatAnimalPerche             -[#008200,dashed]-^  EtatAnimal                  
+EtatAnimalRassasie           -[#008200,dashed]-^  EtatAnimal                  
+EtatHibouParTerre            -[#008200,dashed]-^  EtatPredateur               
+EtatHibouPeutAttaquer        -[#008200,dashed]-^  EtatPredateur               
+EtatPerteDeDanger            -[#008200,dashed]-^  EtatAnimal                  
+EtatScorpionNePeutPasPiquer  -[#008200,dashed]-^  EtatPredateur               
+EtatScorpionPeutPiquer       -[#008200,dashed]-^  EtatPredateur               
+EtatSerpentEntrainDeDigerer  -[#008200,dashed]-^  EtatPredateur               
+EtatSerpentPeutAttaquer      -[#008200,dashed]-^  EtatPredateur               
+FightCommand                 -[#008200,dashed]-^  Command                     
+ForestFactory                -[#008200,dashed]-^  AbstractFactory             
+Gland                        -[#000082,plain]-^  NourriturePrincipale        
+Hibou                        -[#000082,plain]-^  AnimalPredateur             
+InteractCommand              -[#008200,dashed]-^  Command                     
+InventoryCommand             -[#008200,dashed]-^  Command                     
+JungleFactory                -[#008200,dashed]-^  AbstractFactory             
+MoveCommand                  -[#008200,dashed]-^  Command                     
+NourritureDangeureuse        -[#008200,dashed]-^  TileState                   
+NourriturePrincipale         -[#008200,dashed]-^  TileState                   
+NourritureSecondaire         -[#008200,dashed]-^  TileState                   
+PetitRocherTile              -[#000082,plain]-^  CachetteSecondaire          
+Renard                       -[#000082,plain]-^  AnimalPredateur             
+Scorpion                     -[#000082,plain]-^  AnimalPredateur             
+Serpent                      -[#000082,plain]-^  AnimalPredateur             
+Singe                        -[#000082,plain]-^  Animal                      
+ThrowCommand                 -[#008200,dashed]-^  Command                     
+WallTile                     -[#008200,dashed]-^  TileState                   
+@enduml

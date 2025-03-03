@@ -1,0 +1,57 @@
+F
+35
+100
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+A                                   BBB                                       BB                   A
+A       ABC                                                         B  B            B              A
+A                                                                         B   B      B             A
+B                      CCCCCCCCCC G                                   BB           BB   B         B
+A               C    C   CCCCCCG   CCCC                                                            A
+           CCC     C  C CBBB CC CC   CG   C                                       A                A
+ABB                  CCCCCCCC                    BBBBBB             BBBBB A B   BB                 A
+A                           G           AA AA  BB BBB             AAA     B        AAAAAAAAAAAAAAAAA
+AA    BBB                                     CB B  B  AA        ABBB                    @
+B                        E  E           B BB BBBBBB BB                   E         AAAAAAAAAAAAAAAAA
+A        BBB       E    E                       AAAAA                              B   BBB         A
+A                                               BBBBBBB B B                        B       BBB     B
+B                                                                                  BBBBB           A
+A                                                                                                  A
+         A                                                       C            B B        BBB       A
+A          A  A               B     B  B                   G C   C            B  BBB              A
+               C               B  B     BB                    C G CC    C            A     B      B
+B   E   A C A                    BBBB   B                        CG   C                  AA B      A
+B        A   G                B    B  B             E            C  C                  BBB       A
+A            BB   G                                                  G  C             B       AA A
+      C  CBA    CB             B BB            BBBB    E    BBB                            A      A
+A        G     G                B                    BB     E                      B  AA           A
+                            B                       BBBBB     BB                      B   B AA     B
+B                                                         BB                            A          B
+                         A     A                      BBBB                           B   B  AA    A
+A      BBBB              A     A    B                                                   A  AAA     A
+         AAA            A E   A         BB                      A    A                       A    A
+A       AA           B   AAA   E AA    B                      A A AA    A                          A
+      BBB  BB    BBBB      AAAA   A     BB    BB            A    BA B  AAB                       A
+B        AAA           BB     A   A                        A A  B  B B   B                         B
+B                  BBBB     AAA   AAAA  BB                     BBB B     B                         A
+A                     BB    A CCCCC  A       BBB                       A                          A
+                            AAAAAAAAAA   B                               A                         B
+A              B    B     B           B                                                            A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
